@@ -1,0 +1,56 @@
+version: "3"
+
+networks:
+  api-net:
+    name: api-net
+
+services:
+  base: &base
+    hostname: app
+    image: fastapi-application
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - .:/home/python/app
+    environment: &env
+      CORS_ALLOW_CREDENTIALS: "true"
+      CORS_ALLOW_HEADERS: "[\"*\"]"
+      CORS_ALLOW_METHODS: "[\"*\"]"
+      CORS_ALLOW_ORIGINS: "[\"*\"]"
+      ENV: "dev"
+      LOG_LEVEL: "debug"
+      PYTHONPATH: "/home/python/app"
+      WEB_APP_DEBUG: "true"
+      WEB_APP_DESCRIPTION: "FastAPI Application"
+      WEB_APP_TITLE: "FastAPI Application"
+      WEB_APP_VERSION: "0.1.0"
+      WEB_SERVER_HOST: "0.0.0.0"
+      WEB_SERVER_PORT: 8000
+      WEB_SERVER_RELOAD: "true"
+    networks:
+      - api-net
+
+  app:
+    <<: *base
+    command: /bin/bash -c "poetry install --no-root && python app"
+    ports:
+      - "8000:8000"
+
+  lint:
+    <<: *base
+    command: /bin/bash -c "poetry install --no-root && flake8 app/ tests/"
+
+  static-analysis:
+    <<: *base
+    command: /bin/bash -c "poetry install --no-root && mypy app/ tests/"
+
+  tests:
+    <<: *base
+    command: /bin/bash -c "poetry install --no-root && pytest --cov-report=term-missing -n auto"
+    environment:
+      <<: *env
+      ENV: "test"
