@@ -53,6 +53,7 @@ addopts = [
     "--cov-branch",
     "--cov-fail-under=90",
 ]
+asyncio_mode="auto"
 markers = [
     "integration: mark a test as an integration test",
     "unit: mark a test as an unit test",
