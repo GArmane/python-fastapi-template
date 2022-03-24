@@ -3,7 +3,7 @@
 from enum import Enum
 from typing import Any
 
-from app.api.container import Container
+from app.core.container import Container
 from dependency_injector.wiring import Provide, inject
 from fastapi import Depends, status
 from fastapi.routing import APIRouter

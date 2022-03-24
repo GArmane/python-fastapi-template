@@ -4,27 +4,19 @@ Implements DI container initialization, FastAPI application instantiation,
 event handling, middleware and route registry.
 """
 
-from app.config.environment import Settings
-
-import app.api.middlewares.cors as cors
-import app.api.routers.public as public_router
-from app.api.container import Container
-from app.api.error_handlers import register_error_handlers as _register_error_handlers
 from fastapi.applications import FastAPI
 from toolz import pipe
+
+import app.api.middlewares.cors as cors
+from app.api.error_handlers import register_error_handlers as _register_error_handlers
+from app.api.routers import routers
+from app.config.environment import Settings
+from app.core.container import Container, create_container
 
 
 def _create_container(settings: Settings) -> Container:
     """Create and initialize base container for the dependency injection mechanism."""
-    container = Container()
-    container.config.from_pydantic(settings, required=True)
-    container.wire(
-        modules=[
-            cors,
-            public_router,
-        ],
-    )
-    return container
+    return create_container(settings, [cors, *routers])
 
 
 def _create_instance(container: Container) -> FastAPI:
@@ -37,7 +29,6 @@ def _create_instance(container: Container) -> FastAPI:
         description=web_app_settings.description(),
         version=web_app_settings.version(),
     )
-    app.container = container  # type:ignore
 
     return app
 
@@ -62,7 +53,9 @@ def _register_middlewares(app: FastAPI) -> FastAPI:
 
 def _register_routers(app: FastAPI) -> FastAPI:
     """Register APIRouters with the FastAPI application."""
-    app.include_router(public_router.router)
+    for route in routers:
+        app.include_router(route.router)
+
     return app
 
 

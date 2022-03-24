@@ -3,7 +3,7 @@
 from fastapi.applications import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dependency_injector.wiring import inject, Provide
-from app.api.container import Container
+from app.core.container import Container
 from typing import Any
 
 
