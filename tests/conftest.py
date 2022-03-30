@@ -23,8 +23,8 @@ def mock_function(mocker):
 
 
 @pytest.fixture()
-def mock_module(mocker):
-    """Mock module fixture function.
+def mock_class(mocker):
+    """Mock class fixture function.
 
     Returns fixture that is capable of generating a mock object that implements all
     attributes and methods from a given spec.
