@@ -2,11 +2,24 @@
 
 import pytest
 from app.config.environment import Settings
+from xdist import is_xdist_worker
 
 
-@pytest.fixture()
-def env_settings():
-    """Return environment settings."""
+@pytest.fixture(scope="session")
+def env_settings(master_env_settings, request):
+    """Return current node environment settings."""
+    if is_xdist_worker(request):
+        # If running tests in a pytest-xdist environment, you can customize env
+        # variables here. These variables are isolated between nodes.
+        custom_vars = {}
+        return Settings(**custom_vars)
+
+    return master_env_settings
+
+
+@pytest.fixture(scope="session")
+def master_env_settings():
+    """Return master node environment settings."""
     return Settings()
 
 
