@@ -24,6 +24,16 @@ def master_env_settings():
 
 
 @pytest.fixture()
+def mock_class(mocker):
+    """Mock class fixture function.
+
+    Returns fixture that is capable of generating a mock object that implements all
+    attributes and methods from a given spec.
+    """
+    return lambda name, spec: mocker.Mock(name=name, spec=spec)
+
+
+@pytest.fixture()
 def mock_function(mocker):
     """Mock function fixture function.
 
@@ -33,13 +43,3 @@ def mock_function(mocker):
         name=name,
         return_value=return_value,
     )
-
-
-@pytest.fixture()
-def mock_class(mocker):
-    """Mock class fixture function.
-
-    Returns fixture that is capable of generating a mock object that implements all
-    attributes and methods from a given spec.
-    """
-    return lambda name, spec: mocker.Mock(name=name, spec=spec)
