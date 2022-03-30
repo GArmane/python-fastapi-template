@@ -1,7 +1,9 @@
 """Environment configuration module."""
 
-from pydantic import BaseSettings, Field
 from typing import Set
+
+from app.config.types import BaseSettings
+from pydantic import Field
 
 
 class CORSSettings(BaseSettings):
