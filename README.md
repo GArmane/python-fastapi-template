@@ -8,7 +8,7 @@
 
 This project is comprised of the following languages and libraries:
 
-* Language: [Python 3.10](https://www.python.org/)
+* Language: [Python 3.11](https://www.python.org/)
 * Package management: [Poetry](https://python-poetry.org/)
 * Web framework: [FastAPI](https://fastapi.tiangolo.com/)
 * Production web server: [Uvicorn](https://www.uvicorn.org/)
@@ -26,7 +26,7 @@ Auxiliary libraries and plugins were omitted but can be found in the `pyproject.
 
 To start development it is recommended to have these utilities installed in a local development machine:
 
-* [Python 3.10](https://www.python.org/)
+* [Python 3.11](https://www.python.org/)
 * [Docker](https://www.docker.com/)
 * [Docker Compose 1.29.2](https://docs.docker.com/compose/install/)
 * [Git](https://git-scm.com/)

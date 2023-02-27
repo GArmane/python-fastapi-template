@@ -5,7 +5,7 @@ description = ""
 authors = ["Giovanni Armane <giovanniarmane@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 dependency-injector = "^4.37.0"
 fastapi = {version = "^0.75.0", extras = ["ujson", "email_validator", "requests", "uvicorn"]}
 httpx = "^0.22.0"
